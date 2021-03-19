@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Container } from './components/Container';
 import { TableArea, TableContent, TableColumnsPostos, TableColumnsCel } from './components/Table';
 import { Api } from './services/api';
+import {ModalContext} from './contexts/Modal';
 
 function App() {
 
   const [ data, setData ]: any = useState();
 
   useEffect(()=>{
-    
     async function getListContacts() {
-
       try {
         const {data} = await Api.get("https://3333-magenta-krill-c7fvp8ui.ws-us03.gitpod.io/todoscontatos")
         console.log(data)
@@ -18,14 +17,13 @@ function App() {
       } catch (error) {
         alert("algum erro aconteceu!")
       }
-
     }
-
     getListContacts()
   },[])
 
   return (
     <>
+    <ModalContext>
       <Container>
           <TableArea>
               <TableContent>
@@ -83,6 +81,7 @@ function App() {
               </TableContent>
           </TableArea>
       </Container>
+      </ModalContext>
     </>
   );
 }
