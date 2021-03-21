@@ -1,4 +1,8 @@
 export interface IModalContexts {
-  OpenModal: () =>void
-  setOpenModal: () => void
+  OpenModal: any
+  setOpenModal: any
+  IdEdit: string
+  setIdEdit: any
+  OpenModalEdit: any
+  setOpenModalEdit: any
 }

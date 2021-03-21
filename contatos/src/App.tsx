@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container } from './components/Container';
 import { TableArea, TableContent, TableColumnsPostos, TableColumnsCel } from './components/Table';
 import { Api } from './services/api';
-import {ModalContext} from './contexts/Modal';
+import ModalContexts, {ModalContext} from './contexts/Modal';
+import { ModalEdit } from './components/ModalEdit';
+import { Modal } from './components/Modal';
 
 function App() {
 
+  const { OpenModal, setOpenModal,setIdEdit, OpenModalEdit, setOpenModalEdit } = useContext(ModalContexts)
   const [ data, setData ]: any = useState();
 
   useEffect(()=>{
     async function getListContacts() {
       try {
-        const {data} = await Api.get("https://3333-magenta-krill-c7fvp8ui.ws-us03.gitpod.io/todoscontatos")
-        console.log(data)
+        const {data} = await Api.get("/todoscontatos")
+
         return setData(data)
       } catch (error) {
-        alert("algum erro aconteceu!")
+        alert(error.response.data.mensagem)
       }
     }
     getListContacts()
@@ -23,6 +26,8 @@ function App() {
 
   return (
     <>
+    { OpenModalEdit && <ModalEdit /> }
+    { OpenModal && <Modal /> }
     <ModalContext>
       <Container>
           <TableArea>
@@ -47,17 +52,20 @@ function App() {
                 <TableColumnsCel>
                   Cel2
                 </TableColumnsCel>
+                <TableColumnsCel>
+                  Edite um contato      
+                </TableColumnsCel>
               </TableContent>
 
-              <TableContent>
-                {/* { data.map((e:any)=>{
+                { data && data.map((e:any)=>{
                   return (
                     <>
+                  <TableContent>
                     <TableColumnsPostos>
                       {e.postos}
                     </TableColumnsPostos>
                     <TableColumnsPostos>
-                      {e.coordenadores}
+                      {e.coordenador}
                     </TableColumnsPostos>
 
                     <TableColumnsCel>
@@ -75,10 +83,19 @@ function App() {
                     <TableColumnsCel>
                       {e.cel2}
                     </TableColumnsCel>
+                    <TableColumnsCel>
+                      <button onClick={()=> { 
+                        setOpenModalEdit(!OpenModalEdit)
+                        setIdEdit(e.id) 
+                      }}>
+                        Editar
+                      </button>
+                    </TableColumnsCel>
+              </TableContent>
                     </>
                   )
-                }) } */}
-              </TableContent>
+                }) }
+                <button style={{ marginTop: "20px" }} onClick={ () => setOpenModal(!OpenModal) } >Adicionar um novo contato</button>
           </TableArea>
       </Container>
       </ModalContext>

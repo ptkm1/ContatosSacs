@@ -1,8 +1,8 @@
+import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ModalContexts from '../contexts/Modal'
-import { FormEvent, useContext, useRef } from 'react'
-import { CommonButton } from './Button'
 import { Api } from '../services/api'
+import { CommonButton } from './Button'
 
 const Container = styled.div`
   background: gray;
@@ -41,73 +41,60 @@ const InputBlocks = styled.div`
   }
 `
 
-function Modal() {
 
-  const { setOpenModal, OpenModal } = useContext(ModalContexts)
+function ModalEdit() {
 
-  // Refs
-  const PostoRef: any = useRef().current
-  const CoordRef: any = useRef().current
-  const tel1Ref: any = useRef().current
-  const tel2Ref: any = useRef().current
-  const cel1Ref: any = useRef().current
-  const cel2Ref: any = useRef().current
+  const [ dados, setDados ]: any = useState()
+  const { IdEdit, OpenModalEdit, setOpenModalEdit } = useContext(ModalContexts)
 
-  const Submit = async (evt: FormEvent) => {
-    
-   const {data} = await Api.post("/criarcontato", {
-      posto: PostoRef?.value,
-      coordenador: CoordRef?.value,
-      tel1: tel1Ref.value,
-      tel2: tel2Ref.value,
-      cel1: cel1Ref.value,
-      cel2: cel2Ref.value
-    })
+  useEffect(()=>{
 
-    console.log(data.mensagem)
-
-  }
-
+    async function getDados() {
+      const {data} = await Api.get(`/listarporid/${IdEdit}`)
+      setDados(data[0])
+    }
+    getDados()
+    // eslint-disable-next-line
+  },[])
 
   return (
-    <Container style={{ zIndex: 999 }}>
-      <button onClick={ () => setOpenModal(!OpenModal) } >Fechar Modal</button>
+    <Container>
+     <div>
+     <button onClick={ () => setOpenModalEdit(!OpenModalEdit) } >Fechar Modal</button>
+        <h1>Editar contato</h1>
 
-      <div>
-        <h1>Adicionar novo contato</h1>
-
-        <Form onSubmit={Submit}>
+        { dados && 
+        <Form>
           <InputBlocks>
           <span>Posto SAC</span>
-          <input type="text" ref={PostoRef}/>
+          <input type="text" value={dados.postos}/>
           </InputBlocks>
           <InputBlocks>
           <span>Coordenador</span>
-          <input type="text" ref={CoordRef} />
+          <input type="text" value={dados.coordenador} />
           </InputBlocks>
           <InputBlocks>
           <span>Telefone 1</span>
-          <input type="text" ref={tel1Ref} />
+          <input type="text" value={dados.tel1} />
           </InputBlocks>
           <InputBlocks>
           <span>Telefone 2</span>
-          <input type="text" ref={tel2Ref} />
+          <input type="text" value={dados.tel2} />
           </InputBlocks>
           <InputBlocks>
           <span>Celular 1</span>
-          <input type="text" ref={cel1Ref}/>
+          <input type="text" value={dados.cel1} />
           </InputBlocks>
           <InputBlocks>
           <span>Celular 2</span>
-          <input type="text" ref={cel2Ref}/>
+          <input type="text" value={dados.cel2} />
           </InputBlocks>
           <CommonButton>Salvar</CommonButton>
-        </Form>
+        </Form> }
 
       </div>
-
     </Container>
   )
 }
 
-export { Modal }
+export { ModalEdit }
