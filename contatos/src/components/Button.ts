@@ -12,6 +12,7 @@ export const CommonButton = styled.div`
   color: white;
   transition: all 0.1s;
   margin: 5px;
+  border-radius: 7px;
   :hover {
     background-color: white;
     color: royalblue;

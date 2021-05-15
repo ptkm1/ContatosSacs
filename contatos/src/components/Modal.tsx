@@ -3,18 +3,22 @@ import ModalContexts from '../contexts/Modal'
 import { FormEvent, useContext, useRef } from 'react'
 import { CommonButton } from './Button'
 import { Api } from '../services/api'
+import { BiX } from 'react-icons/bi'
 
 const Container = styled.div`
-  background: gray;
+  background: #939CB3;
   color: white;
   width: 100%;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   height: 80vh;
   justify-content: center;
   align-items: center;
@@ -71,7 +75,7 @@ function Modal() {
 
   return (
     <Container style={{ zIndex: 999 }}>
-      <button onClick={ () => setOpenModal(!OpenModal) } >Fechar Modal</button>
+      <CommonButton style={{ width: '50px', height: '50px', position:'absolute', top: 50, left: 50  }} onClick={ () => setOpenModal(!OpenModal) } ><BiX size='20'/></CommonButton>
 
       <div>
         <h1>Adicionar novo contato</h1>

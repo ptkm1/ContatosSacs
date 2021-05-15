@@ -5,6 +5,7 @@ import { Api } from './services/api';
 import ModalContexts, {ModalContext} from './contexts/Modal';
 import { ModalEdit } from './components/ModalEdit';
 import { Modal } from './components/Modal';
+import { CommonButton } from './components/Button';
 
 function App() {
 
@@ -18,7 +19,8 @@ function App() {
 
         return setData(data)
       } catch (error) {
-        alert(error.response.data.mensagem)
+        // alert(error.response.data.mensagem)
+        console.log(`nenhum contato`)
       }
     }
     getListContacts()
@@ -84,18 +86,18 @@ function App() {
                       {e.cel2}
                     </TableColumnsCel>
                     <TableColumnsCel>
-                      <button onClick={()=> { 
+                      <CommonButton onClick={()=> { 
                         setOpenModalEdit(!OpenModalEdit)
                         setIdEdit(e.id) 
                       }}>
                         Editar
-                      </button>
+                      </CommonButton>
                     </TableColumnsCel>
               </TableContent>
                     </>
                   )
                 }) }
-                <button style={{ marginTop: "20px" }} onClick={ () => setOpenModal(!OpenModal) } >Adicionar um novo contato</button>
+                <CommonButton style={{ marginTop: "20px" }} onClick={ () => setOpenModal(!OpenModal) } >Adicionar um novo contato</CommonButton>
           </TableArea>
       </Container>
       </ModalContext>

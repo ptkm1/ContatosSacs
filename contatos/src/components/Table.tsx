@@ -10,6 +10,7 @@ export const TableArea = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 7px;
 `
 export const TableContent = styled.div`
   width: 90%;
@@ -17,6 +18,7 @@ export const TableContent = styled.div`
   background: white;
   display: flex;
   justify-content: space-between;
+  border-radius: 7px;
 `
 
 export const TableColumnsPostos = styled.div`
@@ -26,7 +28,7 @@ export const TableColumnsPostos = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px;
+  border-radius: 7px;
 `
 export const TableColumnsCel = styled.div`
   width: 30%;
@@ -35,5 +37,5 @@ export const TableColumnsCel = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px;
+  border-radius: 7px;
 `
